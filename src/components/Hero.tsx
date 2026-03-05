@@ -30,7 +30,7 @@ const Hero = () => {
         >
           <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
           <span className="font-mono text-xs tracking-wider text-muted-foreground uppercase">
-            UI Developer · Design Engineer
+            Software Engineer
           </span>
         </motion.div>
 

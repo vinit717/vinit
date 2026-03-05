@@ -8,13 +8,21 @@ const experiences = [
     period: "Nov 2024 — Present",
     location: "Bengaluru, India",
     description:
-      "Building and scaling payment UIs serving millions of transactions. Working on design systems and frontend architecture for India's leading payment infrastructure.",
+      "Building and scaling payment UIs. Working on design systems and frontend architecture for India's leading payment infrastructure.",
   },
   {
-    role: "Software Developer",
-    company: "Previous Role",
-    period: "2022 — 2024",
-    location: "India",
+    role: "Full Stack Developer",
+    company: "Bliro",
+    period: "2023 — 2024",
+    location: "Remote, Germany",
+    description:
+      "Strengthened engineering quality by building a comprehensive testing ecosystem (unit, integration, E2E), migrating the desktop app to TypeScript for improved maintainability, establishing CI/CD and linting standards, and integrating external services like Stripe and Jira to streamline payments and automated issue tracking.",
+  },
+  {
+    role: "Frontend Developer",
+    company: "Quinite Technologies",
+    period: "2022 — 2023",
+    location: "Remote, India",
     description:
       "Developed innovative features, delivered impactful projects, and collaborated across teams to ship high-quality software products.",
   },

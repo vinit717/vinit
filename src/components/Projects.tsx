@@ -4,25 +4,18 @@ import { ArrowUpRight } from "lucide-react";
 
 const projects = [
   {
-    title: "Payment Checkout UI",
-    description:
-      "Designed and built a high-performance checkout flow handling millions of daily transactions with sub-second load times.",
-    tags: ["React", "PureScript", "Design System"],
-    number: "01",
-  },
-  {
     title: "Design System",
     description:
       "Created a comprehensive component library ensuring visual consistency across multiple product verticals.",
     tags: ["Components", "Tokens", "Documentation"],
-    number: "02",
+    number: "01",
   },
   {
     title: "Interactive Dashboards",
     description:
       "Built data-rich dashboards with real-time analytics, complex filtering, and responsive visualizations.",
     tags: ["TypeScript", "Charts", "Performance"],
-    number: "03",
+    number: "02",
   },
 ];
 

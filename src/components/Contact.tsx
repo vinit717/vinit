@@ -4,8 +4,8 @@ import { ArrowUpRight, Linkedin, Github, Mail } from "lucide-react";
 
 const links = [
   { label: "LinkedIn", href: "https://www.linkedin.com/in/vinit-khandal/", icon: Linkedin },
-  { label: "GitHub", href: "https://github.com/vinitkhandal", icon: Github },
-  { label: "Email", href: "mailto:vinitkhandal@gmail.com", icon: Mail },
+  { label: "GitHub", href: "https://github.com/vinit717", icon: Github },
+  { label: "Email", href: "mailto:vinit224488@gmail.com", icon: Mail },
 ];
 
 const Contact = () => {
