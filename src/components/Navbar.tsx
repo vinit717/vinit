@@ -1,16 +1,20 @@
-import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
-import { Sun, Moon, Menu, X } from "lucide-react";
+import { useState, useEffect, MouseEvent } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Sun, Moon, Menu, X, User, FolderGit2, Briefcase, PenLine, Mail } from "lucide-react";
+import { scrollToId } from "@/lib/smoothScroll";
+import { springSnappy } from "@/lib/motion";
 
 const navItems = [
-  { label: "About", href: "#about" },
-  { label: "Experience", href: "#experience" },
-  { label: "Work", href: "#work" },
-  { label: "Contact", href: "#contact" },
+  { label: "About", href: "#about", caption: "who I am", icon: User },
+  { label: "Work", href: "#work", caption: "selected projects", icon: FolderGit2 },
+  { label: "Experience", href: "#experience", caption: "where I've been", icon: Briefcase },
+  { label: "Writing", href: "#writing", caption: "notes & experiments", icon: PenLine },
+  { label: "Contact", href: "#contact", caption: "say hello", icon: Mail },
 ];
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
+  // matches the class already on <html> so the first paint doesn't flip
   const [dark, setDark] = useState(true);
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -19,23 +23,36 @@ const Navbar = () => {
   }, [dark]);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 50);
+    const onScroll = () => setScrolled(window.scrollY > 24);
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  const handleNavClick = (e: MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    scrollToId(href);
+    setMobileOpen(false);
+  };
+
   return (
     <motion.header
-      initial={{ y: -20, opacity: 0 }}
+      initial={{ y: -16, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.6, delay: 0.8 }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled ? "bg-background/80 backdrop-blur-xl border-b border-border shadow-sm" : ""
+      transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+      className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-300 ${
+        scrolled ? "bg-background/85 backdrop-blur-md border-b border-border" : "border-b border-transparent"
       }`}
     >
-      <nav className="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
-        <a href="#" className="font-bold text-lg tracking-tight">
-          V<span className="text-primary">.</span>K
+      <nav className="max-w-container mx-auto px-6 h-16 flex items-center justify-between">
+        <a
+          href="#"
+          onClick={(e) => {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          }}
+          className="text-[15px] font-medium tracking-tight"
+        >
+          Vinit Khandal
         </a>
 
         {/* Desktop nav */}
@@ -44,37 +61,80 @@ const Navbar = () => {
             <a
               key={item.label}
               href={item.href}
-              className="font-mono text-xs tracking-wider text-muted-foreground hover:text-primary transition-colors duration-300 uppercase"
+              onClick={(e) => handleNavClick(e, item.href)}
+              className="group relative link-underline text-[13px] text-muted-foreground hover:text-foreground transition-colors duration-200"
             >
               {item.label}
+              <span className="absolute left-1/2 -translate-x-1/2 top-full mt-1.5 flex items-center gap-1 whitespace-nowrap font-serif italic text-xs text-primary opacity-0 -translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 pointer-events-none">
+                <item.icon className="w-3 h-3 not-italic" strokeWidth={2} />
+                {item.caption}
+              </span>
             </a>
           ))}
           <motion.button
-            whileTap={{ scale: 0.9, rotate: 180 }}
-            transition={{ type: "spring", stiffness: 300 }}
             onClick={() => setDark(!dark)}
-            className="p-2 rounded-full bg-secondary text-secondary-foreground hover:bg-primary hover:text-primary-foreground transition-colors"
+            whileTap={{ scale: 0.88 }}
+            transition={springSnappy}
+            className="w-8 h-8 flex items-center justify-center rounded-md border border-border text-muted-foreground hover:text-foreground hover:border-foreground/30 transition-colors duration-200 overflow-hidden"
             aria-label="Toggle theme"
           >
-            {dark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.span
+                key={dark ? "sun" : "moon"}
+                initial={{ opacity: 0, rotate: -60, scale: 0.6 }}
+                animate={{ opacity: 1, rotate: 0, scale: 1 }}
+                exit={{ opacity: 0, rotate: 60, scale: 0.6 }}
+                transition={springSnappy}
+                className="flex"
+              >
+                {dark ? <Sun className="w-[15px] h-[15px]" /> : <Moon className="w-[15px] h-[15px]" />}
+              </motion.span>
+            </AnimatePresence>
           </motion.button>
         </div>
 
         {/* Mobile controls */}
-        <div className="flex md:hidden items-center gap-3">
+        <div className="flex md:hidden items-center gap-2">
           <motion.button
-            whileTap={{ scale: 0.9, rotate: 180 }}
             onClick={() => setDark(!dark)}
-            className="p-2 rounded-full bg-secondary text-secondary-foreground"
+            whileTap={{ scale: 0.88 }}
+            transition={springSnappy}
+            className="w-8 h-8 flex items-center justify-center rounded-md border border-border text-muted-foreground overflow-hidden"
+            aria-label="Toggle theme"
           >
-            {dark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.span
+                key={dark ? "sun" : "moon"}
+                initial={{ opacity: 0, rotate: -60, scale: 0.6 }}
+                animate={{ opacity: 1, rotate: 0, scale: 1 }}
+                exit={{ opacity: 0, rotate: 60, scale: 0.6 }}
+                transition={springSnappy}
+                className="flex"
+              >
+                {dark ? <Sun className="w-[15px] h-[15px]" /> : <Moon className="w-[15px] h-[15px]" />}
+              </motion.span>
+            </AnimatePresence>
           </motion.button>
-          <button
+          <motion.button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="p-2 text-foreground"
+            whileTap={{ scale: 0.88 }}
+            transition={springSnappy}
+            className="w-8 h-8 flex items-center justify-center text-foreground overflow-hidden"
+            aria-label="Toggle menu"
           >
-            {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-          </button>
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.span
+                key={mobileOpen ? "close" : "menu"}
+                initial={{ opacity: 0, rotate: -60, scale: 0.6 }}
+                animate={{ opacity: 1, rotate: 0, scale: 1 }}
+                exit={{ opacity: 0, rotate: 60, scale: 0.6 }}
+                transition={springSnappy}
+                className="flex"
+              >
+                {mobileOpen ? <X className="w-[18px] h-[18px]" /> : <Menu className="w-[18px] h-[18px]" />}
+              </motion.span>
+            </AnimatePresence>
+          </motion.button>
         </div>
       </nav>
 
@@ -82,22 +142,19 @@ const Navbar = () => {
       <motion.div
         initial={false}
         animate={mobileOpen ? { height: "auto", opacity: 1 } : { height: 0, opacity: 0 }}
-        transition={{ duration: 0.3 }}
-        className="md:hidden overflow-hidden bg-background/95 backdrop-blur-xl border-b border-border"
+        transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+        className="md:hidden overflow-hidden bg-background border-b border-border"
       >
-        <div className="px-6 py-4 flex flex-col gap-4">
-          {navItems.map((item, i) => (
-            <motion.a
+        <div className="px-6 py-4 flex flex-col gap-1">
+          {navItems.map((item) => (
+            <a
               key={item.label}
               href={item.href}
-              onClick={() => setMobileOpen(false)}
-              initial={{ x: -20, opacity: 0 }}
-              animate={mobileOpen ? { x: 0, opacity: 1 } : { x: -20, opacity: 0 }}
-              transition={{ delay: i * 0.05 }}
-              className="font-mono text-sm text-muted-foreground hover:text-primary transition-colors py-2"
+              onClick={(e) => handleNavClick(e, item.href)}
+              className="text-sm text-muted-foreground hover:text-foreground transition-colors py-2.5"
             >
               {item.label}
-            </motion.a>
+            </a>
           ))}
         </div>
       </motion.div>

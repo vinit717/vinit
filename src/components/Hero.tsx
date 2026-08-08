@@ -1,139 +1,126 @@
 import { motion } from "framer-motion";
-import { ArrowUpRight, ChevronDown } from "lucide-react";
+import { ArrowUpRight, Coffee, Moon, Terminal, GitBranch, Smartphone, Blocks } from "lucide-react";
+import { scrollToId } from "@/lib/smoothScroll";
+import Magnetic from "@/components/Magnetic";
+import IconReveal from "@/components/IconReveal";
+import SystemStage from "@/components/SystemStage";
+import { springSnappy, ease } from "@/lib/motion";
 
-const Hero = () => {
-  const letterVariants = {
-    hidden: { y: 80, opacity: 0, rotateX: -60 },
-    visible: (i: number) => ({
-      y: 0,
-      opacity: 1,
-      rotateX: 0,
-      transition: {
-        duration: 0.8,
-        delay: 0.15 + i * 0.04,
-        ease: [0.22, 1, 0.36, 1] as [number, number, number, number],
-      },
-    }),
-  };
+const traits = [
+  { icon: Coffee, caption: "Runs on coffee" },
+  { icon: Moon, caption: "Night owl" },
+  { icon: Terminal, caption: "Lives in the terminal" },
+  { icon: GitBranch, caption: "Ships often" },
+  { icon: Smartphone, caption: "Mobile-first" },
+  { icon: Blocks, caption: "Systems thinker" },
+];
 
-  const firstName = "Vinit";
-  const lastName = "Khandal";
+const Hero = () => (
+  <section className="px-6 pt-28 pb-16 md:pt-32 md:pb-20 relative overflow-hidden">
+    <div
+      className="absolute inset-0 pointer-events-none"
+      style={{
+        backgroundImage: `radial-gradient(circle, hsl(var(--foreground) / 0.06) 1px, transparent 1px)`,
+        backgroundSize: "26px 26px",
+        maskImage: "radial-gradient(ellipse 60% 55% at 12% 0%, black, transparent)",
+      }}
+    />
 
-  return (
-    <section className="min-h-screen flex flex-col items-center justify-center px-6 relative overflow-hidden noise-bg">
-      <div className="relative z-10 text-center max-w-3xl mx-auto">
+    <div className="relative max-w-container mx-auto grid lg:grid-cols-[1fr_1.08fr] gap-12 lg:gap-16 items-center">
+      {/* min-w-0: without it the canvas's intrinsic width blows the fr tracks open */}
+      <div className="min-w-0">
         <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.6 }}
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary border border-border mb-8"
+          initial={{ opacity: 0, rotate: -6 }}
+          animate={{ opacity: 1, rotate: -2 }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+          className="inline-flex items-center gap-2 mb-7 px-3 py-1.5 rounded-md border border-primary/30 bg-primary/[0.06]"
         >
-          <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-          <span className="font-mono text-xs tracking-wider text-muted-foreground uppercase">
-            Software Engineer
+          <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+          <span className="text-[13px] text-foreground/80">
+            Bengaluru, India · available for select work
           </span>
         </motion.div>
 
-        <h1 className="text-6xl md:text-8xl lg:text-9xl font-bold tracking-tight leading-[0.85] mb-8" style={{ perspective: "800px" }}>
-          <span className="block overflow-hidden">
-            {firstName.split("").map((letter, i) => (
-              <motion.span
-                key={i}
-                custom={i}
-                variants={letterVariants}
-                initial="hidden"
-                animate="visible"
-                className="inline-block"
-              >
-                {letter}
-              </motion.span>
-            ))}
-          </span>
-          <span className="block overflow-hidden">
-            {lastName.split("").map((letter, i) => (
-              <motion.span
-                key={i}
-                custom={i + firstName.length}
-                variants={letterVariants}
-                initial="hidden"
-                animate="visible"
-                className="inline-block text-gradient"
-              >
-                {letter}
-              </motion.span>
-            ))}
-          </span>
-        </h1>
+        <p className="font-serif italic text-xl md:text-2xl text-muted-foreground mb-3">
+          Hi, I'm Vinit —
+        </p>
+
+        <div className="overflow-hidden mb-6">
+          <motion.h1
+            initial={{ y: "110%" }}
+            animate={{ y: "0%" }}
+            transition={{ duration: 0.7, delay: 0.15, ease }}
+            className="font-serif text-4xl md:text-5xl xl:text-6xl leading-[1.12]"
+          >
+            I build things that <span className="italic text-primary">just work</span>.
+          </motion.h1>
+        </div>
 
         <motion.p
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.6 }}
-          className="text-base md:text-lg text-muted-foreground max-w-md mx-auto leading-relaxed mb-10"
+          transition={{ duration: 0.6, delay: 0.45, ease }}
+          className="text-base md:text-lg text-foreground/70 leading-relaxed mb-9 max-w-xl"
         >
-          Building pixel-perfect interfaces at{" "}
-          <span className="text-primary font-medium">JUSPAY</span>.
-          3 years crafting products that people love to use.
+          Mostly React, some React Native, and enough backend to ship the
+          whole thing myself. Right now I'm at{" "}
+          <span className="text-foreground font-medium">Juspay</span>,
+          building a white-labeled design system that lets every team
+          reshape it to their own brand.
         </motion.p>
 
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.8 }}
-          className="flex flex-col sm:flex-row gap-4 items-center justify-center"
+          transition={{ duration: 0.6, delay: 0.55, ease }}
+          className="flex flex-wrap gap-3 items-center"
         >
-          <motion.a
-            href="#work"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="group flex items-center gap-2 bg-primary text-primary-foreground px-7 py-3.5 rounded-full font-medium text-sm transition-shadow hover:shadow-lg hover:shadow-primary/25"
-          >
-            View Work
-            <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-          </motion.a>
-          <motion.a
-            href="#contact"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="flex items-center gap-2 px-7 py-3.5 rounded-full font-medium text-sm border border-border text-foreground hover:bg-secondary transition-colors"
-          >
-            Get in touch
-          </motion.a>
+          <Magnetic>
+            <motion.a
+              href="#work"
+              onClick={(e) => {
+                e.preventDefault();
+                scrollToId("#work");
+              }}
+              whileTap={{ scale: 0.96 }}
+              transition={springSnappy}
+              className="group flex items-center gap-1.5 bg-primary text-primary-foreground px-5 py-2.5 rounded-md text-sm font-medium transition-opacity hover:opacity-90"
+            >
+              View work
+              <ArrowUpRight className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            </motion.a>
+          </Magnetic>
+          <Magnetic>
+            <motion.a
+              href="#contact"
+              onClick={(e) => {
+                e.preventDefault();
+                scrollToId("#contact");
+              }}
+              whileTap={{ scale: 0.96 }}
+              transition={springSnappy}
+              className="flex items-center gap-1.5 px-5 py-2.5 rounded-md text-sm font-medium border border-border text-foreground hover:border-foreground/30 transition-colors duration-200"
+            >
+              Get in touch
+            </motion.a>
+          </Magnetic>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6, delay: 0.75 }}
+          className="flex flex-wrap gap-5 mt-12"
+        >
+          {traits.map((trait) => (
+            <IconReveal key={trait.caption} icon={trait.icon} caption={trait.caption} />
+          ))}
         </motion.div>
       </div>
 
-      {/* Scroll indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.5 }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2"
-      >
-        <motion.div
-          animate={{ y: [0, 8, 0] }}
-          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-        >
-          <ChevronDown className="w-5 h-5 text-muted-foreground" />
-        </motion.div>
-      </motion.div>
-
-      {/* Decorative elements */}
-      <div className="absolute top-1/3 left-1/4 w-72 h-72 bg-primary/5 rounded-full blur-[100px]" />
-      <div className="absolute bottom-1/3 right-1/4 w-72 h-72 bg-primary/3 rounded-full blur-[120px]" />
-
-      {/* Grid */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 0.04 }}
-        transition={{ duration: 2, delay: 0.5 }}
-        className="absolute inset-0 z-0"
-        style={{
-          backgroundImage: `radial-gradient(circle, hsl(var(--muted-foreground) / 0.2) 1px, transparent 1px)`,
-          backgroundSize: "32px 32px",
-        }}
-      />
-    </section>
-  );
-};
+      <SystemStage />
+    </div>
+  </section>
+);
 
 export default Hero;
