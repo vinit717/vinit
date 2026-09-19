@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-/** Tracks the .dark class the navbar toggles, so the scene can light itself for night. */
+/** Tracks the .dark class the navbar toggles, for anything outside CSS. */
 export function useDarkMode() {
   const [dark, setDark] = useState(
     () => typeof document !== "undefined" && document.documentElement.classList.contains("dark"),

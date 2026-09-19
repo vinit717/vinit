@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500;1,9..144,600&family=Inter:ital,opsz,wght@0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;1,14..32,400&family=IBM+Plex+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500&family=IBM+Plex+Mono:wght@400;500&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,89 +6,91 @@
 
 @layer base {
   :root {
-    /* warm cream, light-first — dark is the opt-in via .dark */
-    --background: 42 38% 95%;
-    --foreground: 20 22% 14%;
+    /* Achromatic by design: the UI carries no hue, the shader carries all of it. */
+    --background: 0 0% 98%;
+    --foreground: 0 0% 4%;
 
-    --card: 40 32% 91%;
-    --card-foreground: 20 22% 14%;
+    --card: 0 0% 96%;
+    --card-foreground: 0 0% 4%;
 
-    --popover: 42 38% 95%;
-    --popover-foreground: 20 22% 14%;
+    --popover: 0 0% 98%;
+    --popover-foreground: 0 0% 4%;
 
     --primary: 13 68% 47%;
-    --primary-foreground: 42 38% 97%;
+    --primary-foreground: 0 0% 98%;
 
-    --secondary: 38 22% 87%;
-    --secondary-foreground: 20 16% 24%;
+    --secondary: 0 0% 94%;
+    --secondary-foreground: 0 0% 20%;
 
-    --muted: 38 22% 87%;
-    --muted-foreground: 22 12% 40%;
+    --muted: 0 0% 94%;
+    --muted-foreground: 0 0% 40%;
 
     --accent: 13 68% 47%;
-    --accent-foreground: 42 38% 97%;
+    --accent-foreground: 0 0% 98%;
 
     --destructive: 6 65% 42%;
-    --destructive-foreground: 42 38% 97%;
+    --destructive-foreground: 0 0% 98%;
 
-    --border: 34 18% 80%;
-    --input: 34 18% 80%;
-    --ring: 13 68% 47%;
+    --border: 0 0% 88%;
+    --input: 0 0% 88%;
+    --ring: 0 0% 40%;
 
-    --radius: 0.65rem;
+    --radius: 0.5rem;
+    --pane-pad-y: 5rem;
+    --pane-pad-x: 3rem;
+    --type-scale: 1;
 
-    --sidebar-background: 40 32% 92%;
-    --sidebar-foreground: 20 22% 14%;
-    --sidebar-primary: 13 68% 47%;
-    --sidebar-primary-foreground: 42 38% 97%;
-    --sidebar-accent: 38 22% 87%;
-    --sidebar-accent-foreground: 20 22% 14%;
-    --sidebar-border: 34 18% 80%;
-    --sidebar-ring: 13 68% 47%;
+    --sidebar-background: 0 0% 96%;
+    --sidebar-foreground: 0 0% 4%;
+    --sidebar-primary: 0 0% 4%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 0 0% 94%;
+    --sidebar-accent-foreground: 0 0% 4%;
+    --sidebar-border: 0 0% 88%;
+    --sidebar-ring: 0 0% 40%;
 
     --font-display: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    --font-serif: 'Fraunces', Georgia, serif;
     --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
   }
 
   .dark {
-    /* near-black stage: the render and the accent have to be the only bright things */
-    --background: 24 12% 4%;
-    --foreground: 40 22% 93%;
+    /* #090909, with heading/body opacities taken from the reference tokens */
+    --background: 0 0% 3.5%;
+    --foreground: 0 0% 90%;
 
-    --card: 24 10% 8%;
-    --card-foreground: 40 22% 93%;
+    --card: 0 0% 7%;
+    --card-foreground: 0 0% 100%;
 
-    --popover: 24 12% 4%;
-    --popover-foreground: 40 22% 93%;
+    --popover: 0 0% 3.5%;
+    --popover-foreground: 0 0% 100%;
 
     --primary: 13 72% 58%;
-    --primary-foreground: 20 20% 10%;
+    --primary-foreground: 0 0% 4%;
 
-    --secondary: 24 10% 12%;
-    --secondary-foreground: 40 15% 82%;
+    --secondary: 0 0% 11%;
+    --secondary-foreground: 0 0% 90%;
 
-    --muted: 24 10% 12%;
-    --muted-foreground: 28 7% 60%;
+    --muted: 0 0% 11%;
+    --muted-foreground: 0 0% 60%;
 
     --accent: 13 72% 58%;
-    --accent-foreground: 20 20% 10%;
+    --accent-foreground: 0 0% 4%;
 
     --destructive: 6 70% 55%;
-    --destructive-foreground: 40 24% 92%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 26 9% 15%;
-    --input: 26 9% 15%;
-    --ring: 13 72% 58%;
+    --border: 0 0% 14%;
+    --input: 0 0% 14%;
+    --ring: 0 0% 60%;
 
-    --sidebar-background: 20 16% 10%;
-    --sidebar-foreground: 40 24% 92%;
-    --sidebar-primary: 13 72% 58%;
-    --sidebar-primary-foreground: 20 20% 10%;
-    --sidebar-accent: 20 13% 16%;
-    --sidebar-accent-foreground: 40 24% 92%;
-    --sidebar-border: 20 12% 20%;
-    --sidebar-ring: 13 72% 58%;
+    --sidebar-background: 0 0% 5%;
+    --sidebar-foreground: 0 0% 100%;
+    --sidebar-primary: 0 0% 100%;
+    --sidebar-primary-foreground: 0 0% 4%;
+    --sidebar-accent: 0 0% 11%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 0 0% 14%;
+    --sidebar-ring: 0 0% 60%;
   }
 }
 
@@ -98,6 +100,11 @@
     transition-property: background-color, border-color, color, fill, stroke, box-shadow;
     transition-duration: 500ms;
     transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  html {
+    font-size: calc(16px * var(--type-scale));
+    transition: font-size 500ms cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   body {
@@ -115,12 +122,129 @@
 }
 
 @layer utilities {
+  /* hover sweep: a rule that wipes in from the left, in the accent colour */
+  .sweep {
+    position: relative;
+  }
+
+  .sweep::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -0.35em;
+    height: 1px;
+    width: 100%;
+    background: hsl(var(--primary));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .group:hover .sweep::after {
+    transform: scaleX(1);
+  }
+
+  /* Weak GPU: drop the blur, which is by far the most expensive thing on the
+     page, and fall back to an opaque pane. Everything else stays identical. */
+  .perf-low .glass {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: hsl(var(--background) / 0.94);
+  }
+
+  /* Apple-style glass: the surface is translucent and blurred, so whatever moves
+     behind it tints and blooms through. The specular top edge and the darker
+     bottom edge are what make it read as a physical pane rather than a tint. */
+  /* surface treatment only — no geometry, so it is safe on any element */
+  .glass {
+    position: relative;
+    background: hsl(var(--background) / 0.62);
+    backdrop-filter: blur(32px) saturate(115%);
+    -webkit-backdrop-filter: blur(32px) saturate(115%);
+    border: 1px solid hsl(var(--foreground) / 0.09);
+    box-shadow:
+      inset 0 1px 0 hsl(var(--foreground) / 0.14),
+      inset 0 -1px 0 hsl(var(--foreground) / 0.03),
+      0 24px 60px -30px hsl(0 0% 0% / 0.7);
+  }
+
+  /* a slow sheen across the top, picking up the brand hue */
+  .glass::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    background: linear-gradient(180deg, hsl(var(--foreground) / 0.045), transparent 38%);
+  }
+
+  .glass > * {
+    position: relative;
+  }
+
+  /* the large content panes add their own geometry on top of the surface */
+  .glass-pane {
+    border-radius: calc(var(--radius) * 2.2);
+    padding: var(--pane-pad-y) var(--pane-pad-x);
+    transition:
+      border-radius 500ms cubic-bezier(0.16, 1, 0.3, 1),
+      padding 500ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  @media (max-width: 768px) {
+    .glass-pane {
+      padding: calc(var(--pane-pad-y) * 0.6) 1.5rem;
+    }
+  }
+
+  /* Measured off the reference: weight 400 at every size, leading ~0.96,
+     tracking tightening as the type grows. */
+  .t-display {
+    font-weight: 400;
+    line-height: 0.95;
+    letter-spacing: -0.055em;
+  }
+
+  .t-h2 {
+    font-weight: 400;
+    line-height: 0.98;
+    letter-spacing: -0.038em;
+  }
+
+  .t-h3 {
+    font-weight: 400;
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+  }
+
+  .t-lead {
+    font-weight: 400;
+    line-height: 1.28;
+    letter-spacing: -0.02em;
+  }
+
+  .t-label {
+    font-weight: 400;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
   .font-mono {
     font-family: var(--font-mono);
   }
 
-  .font-serif {
-    font-family: var(--font-serif);
+  /* A plate is a window cut into the ground, not a card laid on top of it: the
+     sheet stays opaque enough to read across the middle and falls away to clear
+     at the seams, so the engraving runs continuously from plate to plate
+     instead of only showing on the first screen. */
+  .plate-ground {
+    background: linear-gradient(
+      to bottom,
+      transparent 0%,
+      hsl(var(--background) / 0.9) 9%,
+      hsl(var(--background) / 0.9) 91%,
+      transparent 100%
+    );
   }
 
   .link-underline {

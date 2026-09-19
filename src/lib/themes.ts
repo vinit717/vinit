@@ -8,21 +8,75 @@ export const brandSwatches = [
   { name: "Ocean", hue: 195 },
 ];
 
-let currentHue = brandSwatches[0].hue;
+export const RADII = [
+  { id: "sharp", label: "Sharp", value: "0rem" },
+  { id: "soft", label: "Soft", value: "0.5rem" },
+  { id: "round", label: "Round", value: "1.25rem" },
+] as const;
+
+export const DENSITIES = [
+  { id: "compact", label: "Compact", value: 0.7 },
+  { id: "regular", label: "Regular", value: 1 },
+  { id: "airy", label: "Airy", value: 1.35 },
+] as const;
+
+export const SCALES = [
+  { id: "tight", label: "Tight", value: 0.92 },
+  { id: "regular", label: "Regular", value: 1 },
+  { id: "large", label: "Large", value: 1.1 },
+] as const;
+
+export type SystemConfig = {
+  hue: number;
+  radius: (typeof RADII)[number]["id"];
+  density: (typeof DENSITIES)[number]["id"];
+  scale: (typeof SCALES)[number]["id"];
+};
+
+let config: SystemConfig = {
+  hue: brandSwatches[0].hue,
+  radius: "soft",
+  density: "regular",
+  scale: "regular",
+};
+
 const listeners = new Set<() => void>();
 
-/** Rewrites the accent tokens on :root — every component reads these, including the 3D scene. */
-export function applyBrandHue(hue: number) {
+/**
+ * Writes the whole configuration out as CSS custom properties. Nothing in the
+ * page reads these values directly — they only ever read the tokens, which is
+ * the point being demonstrated.
+ */
+function apply() {
   const root = document.documentElement.style;
-  const value = `${hue} 68% 50%`;
-  root.setProperty("--primary", value);
-  root.setProperty("--accent", value);
-  root.setProperty("--ring", value);
-  root.setProperty("--sidebar-primary", value);
-  root.setProperty("--sidebar-ring", value);
 
-  currentHue = hue;
+  const accent = `${config.hue} 68% 50%`;
+  root.setProperty("--primary", accent);
+  root.setProperty("--accent", accent);
+  root.setProperty("--ring", accent);
+  root.setProperty("--sidebar-primary", accent);
+  root.setProperty("--sidebar-ring", accent);
+
+  root.setProperty("--radius", RADII.find((r) => r.id === config.radius)!.value);
+
+  const density = DENSITIES.find((d) => d.id === config.density)!.value;
+  root.setProperty("--pane-pad-y", `${5 * density}rem`);
+  root.setProperty("--pane-pad-x", `${3 * density}rem`);
+
+  const scale = SCALES.find((s) => s.id === config.scale)!.value;
+  root.setProperty("--type-scale", String(scale));
+
   listeners.forEach((fn) => fn());
+}
+
+export function setSystem(patch: Partial<SystemConfig>) {
+  config = { ...config, ...patch };
+  apply();
+}
+
+/** Kept for the shader, which needs the raw hue rather than a CSS variable. */
+export function applyBrandHue(hue: number) {
+  setSystem({ hue });
 }
 
 function subscribe(fn: () => void) {
@@ -30,11 +84,10 @@ function subscribe(fn: () => void) {
   return () => listeners.delete(fn);
 }
 
-/** Live brand hue, for anything that can't read a CSS variable (canvas, WebGL). */
+export function useSystem() {
+  return useSyncExternalStore(subscribe, () => config, () => config);
+}
+
 export function useBrandHue() {
-  return useSyncExternalStore(
-    subscribe,
-    () => currentHue,
-    () => currentHue,
-  );
+  return useSyncExternalStore(subscribe, () => config.hue, () => config.hue);
 }
