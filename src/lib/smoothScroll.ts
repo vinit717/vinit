@@ -12,12 +12,11 @@ export function initSmoothScroll() {
   const preserved = Array.from(root.classList);
 
   lenis = new Lenis({
-    // Heavier glide: a longer tail with an exponential ease is what gives scroll
-    // its weight. The previous 1.1s cubic settled too fast to feel like momentum.
-    duration: 1.5,
+    // A short easing tail keeps the story fluid without making scrolling sluggish.
+    duration: 1.05,
     easing: (t: number) => (t === 1 ? 1 : 1 - Math.pow(2, -10 * t)),
     wheelMultiplier: 0.9,
-    touchMultiplier: 1.6,
+    touchMultiplier: 1,
   });
 
   requestAnimationFrame(() => {
@@ -39,6 +38,6 @@ export function scrollToId(id: string) {
   if (lenis) {
     lenis.scrollTo(target as HTMLElement, { offset: -16 });
   } else {
-    target.scrollIntoView({ behavior: "smooth" });
+    target.scrollIntoView({ behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
   }
 }
